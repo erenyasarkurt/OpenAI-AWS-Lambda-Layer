@@ -6,7 +6,9 @@ This is an AWS Lambda Layer providing the dependencies for the OpenAI package wh
 
 This is a pre-built layer zip which you can easily deploy to AWS Lambda through the management console or the AWS CLI:
 
-[OpenAI 0.25.0 Download for Python 3.7 / 3.8 / 3.9](releases/openai-aws-lambda-layer.zip)
+[OpenAI 0.25.0 (Python 3.7)](releases/openai-aws-lambda-layer-3.7.zip)
+[OpenAI 0.25.0 (Python 3.8)](releases/openai-aws-lambda-layer-3.8.zip)
+[OpenAI 0.25.0 (Python 3.9)](releases/openai-aws-lambda-layer-3.9.zip)
 
 ## Building
 
