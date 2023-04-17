@@ -6,11 +6,11 @@ This is an AWS Lambda Layer providing the dependencies for the OpenAI package wh
 
 This is a pre-built layer zip which you can easily deploy to AWS Lambda through the management console or the AWS CLI:
 
-[OpenAI 0.25.0 (Python 3.7)](releases/openai-aws-lambda-layer-3.7.zip)
+[OpenAI 0.27.4 (Python 3.7)](releases/openai-aws-lambda-layer-3.7.zip)
 
-[OpenAI 0.25.0 (Python 3.8)](releases/openai-aws-lambda-layer-3.8.zip)
+[OpenAI 0.27.4 (Python 3.8)](releases/openai-aws-lambda-layer-3.8.zip)
 
-[OpenAI 0.25.0 (Python 3.9)](releases/openai-aws-lambda-layer-3.9.zip)
+[OpenAI 0.27.4 (Python 3.9)](releases/openai-aws-lambda-layer-3.9.zip)
 
 ## Building
 
@@ -32,17 +32,17 @@ import openai
 import json
 import datetime
 
-def query_completion(prompt: str, engine: str = 'text-davinci-003', temperature: float = 0.5, max_tokens: int = 1500, top_p: int = 1, frequency_penalty: int = 0.5, presence_penalty: int = 0.2) -> object:
+def query_completion(prompt: str, engine: str = 'gpt-3.5-turbo', temperature: float = 0.2, max_tokens: int = 1500, top_p: int = 1, frequency_penalty: float = 0.2, presence_penalty: float = 0) -> object:
     """
-    Function for querying GPT-3.
+    Function for querying GPT-3.5 Turbo.
     """
     estimated_prompt_tokens = int(len(prompt.split()) * 1.6)
     estimated_answer_tokens = 2049 - estimated_prompt_tokens
-    response = openai.Completion.create(
-    engine=engine,
-    prompt=prompt,
+    response = openai.ChatCompletion.create(
+    model=engine,
+    messages=[{"role": "user", "content": prompt}],
     temperature=temperature,
-    max_tokens=min(4096-estimated_prompt_tokens, max_tokens),
+    max_tokens=min(4096-estimated_prompt_tokens-150, max_tokens),
     top_p=top_p,
     frequency_penalty=frequency_penalty,
     presence_penalty=presence_penalty
@@ -67,7 +67,7 @@ def lambda_handler(event, context):
     max_tokens = 1500
     
     response = query_completion(prompt)
-    response_text = response['choices'][0]['text'].strip()
+    response_text = response['choices'][0]['message']['content'].strip()
 
     response = {
         "statusCode": 200,
@@ -86,6 +86,4 @@ $ curl --request POST 'https://your.lambda-url.us-west-1.on.aws/' --header 'Cont
 
 Here is a response:
 
-```
-Deploying OpenAI on AWS Lambda could be a great way to take advantage of the powerful capabilities of both platforms. With OpenAI, developers can build and deploy their own artificial intelligence models quickly and easily, while AWS Lambda provides a serverless platform for running code without having to manage any underlying infrastructure. This combination makes sense for businesses looking to quickly spin up AI models that require minimal maintenance or setup. Additionally, the scalability of AWS Lambda means that it can easily handle the increased demand from more complex AI models as they are built and deployed. All in all, deploying OpenAI on AWS Lambda is an excellent option for businesses looking to quickly get started with artificial intelligence technologies.
-```
+> Deploying OpenAI on AWS Lambda can be a smart move for businesses looking to leverage the power of artificial intelligence without investing in expensive hardware or infrastructure. AWS Lambda is a serverless computing platform that allows developers to run code without managing servers. This means that businesses can easily deploy OpenAI models on AWS Lambda and scale up or down as needed, without worrying about server maintenance or capacity planning. Additionally, AWS Lambda offers pay-per-use pricing, which means that businesses only pay for the computing resources they use, making it a cost-effective solution for deploying OpenAI models. Overall, deploying OpenAI on AWS Lambda can help businesses streamline their AI initiatives and achieve faster time-to-market with minimal investment.
