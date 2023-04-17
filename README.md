@@ -1,4 +1,4 @@
-# OpenAI-AWS-Lambda-Layer
+# OpenAI-AWS-Lambda-Layer + Pinecone
 
 This is an AWS Lambda Layer providing the dependencies for the OpenAI package which allows you to easily develop Serverless OpenAI services, greatly reducing price and removing the complexity of managing the OpenAI dependencies yourself.
 
@@ -6,11 +6,11 @@ This is an AWS Lambda Layer providing the dependencies for the OpenAI package wh
 
 This is a pre-built layer zip which you can easily deploy to AWS Lambda through the management console or the AWS CLI:
 
-[OpenAI 0.27.4 (Python 3.7)](releases/openai-aws-lambda-layer-3.7.zip)
+[OpenAI 0.27.4 + Pinecone 2.2.1 (Python 3.7)](releases/openai-aws-lambda-layer-3.7.zip)
 
-[OpenAI 0.27.4 (Python 3.8)](releases/openai-aws-lambda-layer-3.8.zip)
+[OpenAI 0.27.4 + Pinecone 2.2.1 (Python 3.8)](releases/openai-aws-lambda-layer-3.8.zip)
 
-[OpenAI 0.27.4 (Python 3.9)](releases/openai-aws-lambda-layer-3.9.zip)
+[OpenAI 0.27.4 + Pinecone 2.2.1 (Python 3.9)](releases/openai-aws-lambda-layer-3.9.zip)
 
 ## Building
 
