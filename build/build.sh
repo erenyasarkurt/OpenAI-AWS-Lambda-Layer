@@ -10,16 +10,22 @@ PKG_DIR="python"
 VERSION=${1:-3.8}
 PACKAGE_VERSION=$VERSION
 PIP="pip"
+ARCHITECTURE="arm64"
 
 rm -rf ${PKG_DIR} && mkdir -p ${PKG_DIR}
 
 if [ $(version $VERSION) -ge $(version "3.9") ]; then
-    DOCKER_IMAGE="public.ecr.aws/sam/build-python3.9:1.65.0"
+    DOCKER_IMAGE="public.ecr.aws/sam/build-python3.9:1.83.0"
     PIP="pip3"
     VERSION="-x86_64"
+fi
+if [ $(version $VERSION) -ge $(version "3.10") ]; then
+    DOCKER_IMAGE="public.ecr.aws/sam/build-python3.10:1.83.0"
+    PIP="pip3"
+    VERSION="-$ARCHITECTURE"
 fi
 
 docker run -v $(pwd):/var/task ${DOCKER_IMAGE}${VERSION} \
 ${PIP} install -r requirements.txt -t ${PKG_DIR}
 
-zip -r releases/openai-aws-lambda-layer-${PACKAGE_VERSION}.zip python
+zip -r releases/aws-lambda-layer-${PACKAGE_VERSION}${VERSION}.zip python
