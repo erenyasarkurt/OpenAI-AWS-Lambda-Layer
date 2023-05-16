@@ -7,25 +7,26 @@ function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4
 
 DOCKER_IMAGE="lambci/lambda:build-python"
 PKG_DIR="python"
-VERSION=${1:-3.8}
-PACKAGE_VERSION=$VERSION
+PYTHON_VERSION=${1:-3.8}
+PACKAGE_VERSION=$PYTHON_VERSION
 PIP="pip"
-ARCHITECTURE="arm64"
+ARCHITECTURE=${2:-"arm64"}
+DOCKER_SUFFIX=""
 
 rm -rf ${PKG_DIR} && mkdir -p ${PKG_DIR}
 
-if [ $(version $VERSION) -ge $(version "3.9") ]; then
+if [ $(version $PYTHON_VERSION) -ge $(version "3.9") ]; then
     DOCKER_IMAGE="public.ecr.aws/sam/build-python3.9:1.83.0"
     PIP="pip3"
-    VERSION="-x86_64"
+    DOCKER_SUFFIX="-x86_64"
 fi
-if [ $(version $VERSION) -ge $(version "3.10") ]; then
+if [ $(version $PYTHON_VERSION) -ge $(version "3.10") ]; then
     DOCKER_IMAGE="public.ecr.aws/sam/build-python3.10:1.83.0"
     PIP="pip3"
-    VERSION="-$ARCHITECTURE"
+    DOCKER_SUFFIX="-$ARCHITECTURE"
 fi
 
-docker run -v $(pwd):/var/task ${DOCKER_IMAGE}${VERSION} \
+docker run -v $(pwd):/var/task ${DOCKER_IMAGE}${DOCKER_SUFFIX} \
 ${PIP} install -r requirements.txt -t ${PKG_DIR}
 
-zip -r releases/aws-lambda-layer-${PACKAGE_VERSION}${VERSION}.zip python
+zip -r releases/aws-lambda-layer-${PACKAGE_VERSION}${DOCKER_SUFFIX}.zip python
