@@ -2,6 +2,10 @@
 
 Work derived from https://github.com/erenyasarkurt/OpenAI-AWS-Lambda-Layer
 
+## Requirements
+
+install 'zip'
+
 ## Building
 
 You can build the OpenAI layer yourself (requires Docker) and get the latest version and customize the Python version which you're building for:
