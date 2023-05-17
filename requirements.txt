@@ -5,3 +5,4 @@
 # certifi; python_version>"3.6"
 # typing-extensions; python_version>"3.6"
 boto3
+pymysql
