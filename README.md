@@ -11,7 +11,7 @@ install 'zip'
 You can build the OpenAI layer yourself (requires Docker) and get the latest version and customize the Python version which you're building for:
 
 ```bash
-$ cd openai-aws-lambda-layer
+$ cd create-aws-python-layer
 $ ./build/build.sh
 # or specify Python version
 $ ./build/build.sh 3.10
