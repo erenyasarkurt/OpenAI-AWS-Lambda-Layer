@@ -31,8 +31,14 @@ def lambda_handler(event, context):
     print("Event:")
     print(event)
 
-    body = json.loads(event['body'])
-    prompt = body['prompt']
+    body = json.loads(event.get('body', '{}'))  # Safe way to load the body 
+    prompt = body.get('prompt')  # Safely get the 'prompt'
+    
+    if not prompt:
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"error": "Missing 'prompt' in request body"})
+        }
         
     max_tokens = 1500
     
